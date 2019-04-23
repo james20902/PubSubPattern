@@ -9,7 +9,8 @@ public class Main {
         test2.setMessage("Only object 2 should see this");
 
         (new Thread(new Subscriber(EventHandler.topics.Example, 500))).start();
-        (new Thread(new Subscriber(EventHandler.topics.Example2, 1000))).start();
+        (new Thread(new Subscriber(EventHandler.topics.Example2))).start();
+        (new Thread(new Subscriber(EventHandler.topics.Example2))).start();
 
         while(true){
             test.push();

@@ -1,16 +1,23 @@
 public class Subscriber implements Runnable{
 
     private Event currentEvent;
+    private EventHandler.topics listener;
     private long timing;
 
     public Subscriber(EventHandler.topics topic){
-        EventHandler.getInstance().registerSubscriber(topic, this);
+        listener = topic;
         timing = 5;
+        EventHandler.getInstance().registerSubscriber(this);
     }
 
     public Subscriber(EventHandler.topics topic, long timing){
-        EventHandler.getInstance().registerSubscriber(topic, this);
+        listener = topic;
         this.timing = timing;
+        EventHandler.getInstance().registerSubscriber(this);
+    }
+
+    public EventHandler.topics returnTopic(){
+        return listener;
     }
 
     public void recieveEvent(Event currentEvent){

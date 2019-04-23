@@ -1,12 +1,11 @@
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class EventHandler {
 
     private static EventHandler instance;
     private Stack<Object> stack = new Stack<>();
-    private Map<topics, Subscriber> map = new EnumMap<>(topics.class);
+    private ArrayList<Subscriber> list = new ArrayList<>();
 
     public enum topics{
         Example,
@@ -21,8 +20,8 @@ public class EventHandler {
         return instance;
     }
 
-    public void registerSubscriber(topics topic, Subscriber sub){
-        map.put(topic, sub);
+    public void registerSubscriber(Subscriber sub){
+        list.add(sub);
     }
 
     public void pushToStack(Event message){
@@ -32,9 +31,9 @@ public class EventHandler {
     public void poll(){
         while(!stack.empty()){
             Event event = (Event)stack.pop();
-            for(Map.Entry<topics, Subscriber> entry : map.entrySet()){
-                if(event.getEventTopic() == entry.getKey()){
-                    entry.getValue().recieveEvent(event);
+            for(Subscriber sub : list){
+                if(event.getEventTopic() == sub.returnTopic()){
+                    sub.recieveEvent(event);
                 }
             }
         }

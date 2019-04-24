@@ -31,12 +31,12 @@ public class Subscriber implements Runnable{
     public void run(){
         while(true){
             try {
-                System.out.println(this.toString() + " " + currentEvent.getEventMessage());
+                if(currentEvent != null){
+                    System.out.println(this.toString() + " " + currentEvent.getEventMessage());
+                }
                 Thread.sleep(timing);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } catch (NullPointerException e){
-                System.out.println(this.toString() + " no message");
             }
         }
     }

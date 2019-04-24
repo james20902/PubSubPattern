@@ -4,7 +4,7 @@ import java.util.Stack;
 public class EventHandler {
 
     private static EventHandler instance;
-    private Stack<Object> stack = new Stack<>();
+    private Stack<Event> stack = new Stack<>();
     private ArrayList<Subscriber> list = new ArrayList<>();
 
     public enum topics{
@@ -30,7 +30,7 @@ public class EventHandler {
 
     public void poll(){
         while(!stack.empty()){
-            Event event = (Event)stack.pop();
+            Event event = stack.pop();
             for(Subscriber sub : list){
                 if(event.getEventTopic() == sub.returnTopic()){
                     sub.recieveEvent(event);
